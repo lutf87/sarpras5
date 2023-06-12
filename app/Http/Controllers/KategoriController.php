@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KategoriController extends Controller
 {
@@ -61,9 +62,11 @@ class KategoriController extends Controller
 
         if (!$request) {
             // Toastr::error('Data gagal Disimpan', 'Gagal', ["positionClass" => "toast-top-full-width"]);
+            toast('Kategori gagal disimpan','error')->autoClose(1500);
             return redirect()->route('kategori.create');
         } else {
             // Toastr::success('Data berhasil Disimpan', 'Berhasil', ["positionClass" => "toast-top-center"]);
+            toast('Kategori berhasil disimpan','success')->autoClose(1500);
             return redirect()->route('kategori.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
@@ -101,6 +104,7 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $kategori = Kategori::findOrFail($id);
+        $kategori->delete();
         $request->validate(
             [
                 'kode_kategori' => 'unique:kategoris,kode_kategori|required',
@@ -116,9 +120,11 @@ class KategoriController extends Controller
 
         if (!$request) {
             // Toastr::error('Data gagal Disimpan', 'Gagal', ["positionClass" => "toast-top-full-width"]);
+            toast('Kategori gagal diupdate','error')->autoClose(1500);
             return redirect()->route('kategori.create');
         } else {
             // Toastr::success('Data berhasil Disimpan', 'Berhasil', ["positionClass" => "toast-top-center"]);
+            toast('Kategori berhasil diupdate','success')->autoClose(1500);
             return redirect()->route('kategori.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
@@ -134,6 +140,7 @@ class KategoriController extends Controller
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
         // Toastr::success('Kategori berhasil Dihapus', 'Berhasil', ["positionClass" => "toast-top-center"]);
+        toast('Kategori berhasil dihapus','success')->autoClose(1500);
         return redirect()->route('kategori.index');
     }
 }

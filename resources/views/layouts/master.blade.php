@@ -35,6 +35,9 @@
             </footer>
         </div>
     </div>
+    <!-- sweet alert -->
+    @include('sweetalert::alert')
+    <!-- sweet alert -->
     <!-- script -->
     @include('layouts.scripts.script')
     <!-- script -->

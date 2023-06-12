@@ -16,7 +16,7 @@
                                 <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a>
                             </div>
                             <div class="col-auto">
-                                <input type="text" name="keyword" id="keyword" class="form-control"
+                                <input type="text" name="keyword" class="form-control"
                                     placeholder="ketik keyword disini">
                             </div>
                             <div class="col-auto">
@@ -44,15 +44,15 @@
                                     <td>{{ $data->kode_kategori }}</td>
                                     <td>{{ $data->nama_kategori }}</td>
                                     <td>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('kategori.destroy', $data->id) }}" method="POST">
-                                            <a href="{{ route('kategori.edit', $data->id) }}" class="btn btn-sm btn-primary">Ubah</a>
+                                        <form action="{{ route('kategori.destroy', $data->id) }}" method="POST">
+                                            <a href="{{ route('kategori.edit', $data->id) }}"
+                                                class="btn btn-sm btn-primary">Ubah</a>
                                             @csrf
                                             @method('DELETE')
                                             {{-- <button type="submit" class="btn btn-sm btn-danger">Hapus</button> --}}
                                             <input name="_method" type="hidden" value="DELETE">
                                             <button type="submit"
-                                                class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm"
+                                                class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete"
                                                 data-toggle="tooltip" title='Delete'>Hapus</button>
                                         </form>
                                     </td>

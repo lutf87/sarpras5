@@ -36,8 +36,8 @@
                     <div class="card-footer">
                         <a href="{{ route('kategori.index') }}" name="kembali" class="btn btn-danger" id="back"><i
                                 class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
-                        <button name="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp;
-                            Edit</button>
+                        <button name="submit" class="btn btn-primary btn-update"><i class="nav-icon fas fa-save"></i> &nbsp;
+                            Simpan</button>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger">
