@@ -7,13 +7,13 @@
         <div class="col">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Produk</h4>
+                    <h4 class="card-title">Tambah Stok</h4>
                 </div>
                 <div class="card-body">
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('produk.create') }}" class="btn btn-success">Tambah Produk</a>
+                                <a href="{{ route('stokIn.create') }}" class="btn btn-success">Tambah Stok</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"
@@ -32,27 +32,35 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px">No</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col">Kode Produk</th>
+                                {{-- <th scope="col">Gambar</th> --}}
+                                {{-- <th scope="col">Kode Produk</th> --}}
                                 <th scope="col">Nama Produk</th>
-                                <th scope="col">Kategori</th>
+                                {{-- <th scope="col">Kategori</th> --}}
+                                <th scope="col">Penempatan</th>
+                                <th scope="col">Harga Beli</th>
+                                <th scope="col">Tanggal Beli</th>
+                                <th scope="col">Jumlah - Satuan</th>
                                 <th style="width: 150px" scope="col">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($produks as $produk)
+                            @forelse ($stokIns as $stokIn)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center">
-                                        <img src="{{ Storage::url('produk/') . $produk->foto_produk }}"
+                                    {{-- <td class="text-center">
+                                        <img src="{{ Storage::url('/') . $produk->foto_produk }}"
                                             class="card-img img-thumbnails" style="max-height: 150px; max-width: 150px; overflow-x: hidden; overflow-y: hidden">
-                                    </td>
-                                    <td>{{ $produk->kode_produk }}</td>
-                                    <td>{{ $produk->nama_produk }}</td>
-                                    <td>{{ $produk->kategori->nama_kategori }}</td>
+                                    </td> --}}
+                                    {{-- <td>{{ $produk->kode_produk }}</td> --}}
+                                    <td>{{ $stokIn->produk->nama_produk }}</td>
+                                    {{-- <td>{{ $produk->kategori->nama_kategori }}</td> --}}
+                                    <td>{{ $stokIn->tempat->nama_tempat }}</td>
+                                    <td>{{ $stokIn->harga_beli }}</td>
+                                    <td>{{ $stokIn->tgl_beli }}</td>
+                                    <td>{{ $stokIn->jml_produk }} - {{ $stokIn->satuan->nama_satuan }}</td>
                                     <td>
-                                        <form action="{{ route('produk.destroy', $produk->id) }}" method="POST">
-                                            <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-secondary">Detail</a>
+                                        <form action="#" method="POST">
+                                            <a href="#" class="btn btn-sm btn-secondary">Detail</a>
                                             {{-- <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary">Edit</a> --}}
                                             @csrf
                                             @method('DELETE')
@@ -62,7 +70,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Produk belum Tersedia.
+                                    Stok Masuk belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
@@ -72,7 +80,7 @@
             </div>
         </div>
         <div class="d-flex mt-2">
-            {!! $produks->links() !!}
+            {!! $stokIns->links() !!}
         </div>
     </div>
     <script>

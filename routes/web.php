@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\StokInController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +35,23 @@ Route::prefix('admin')->group(function () {
         Route::get('edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
         Route::patch('/{id}', [KategoriController::class, 'update'])->name('kategori.update');
     });
+
+    // produk
+    Route::prefix('produk')->group(function () {
+        Route::get('/', [ProdukController::class, 'index'])->name('produk.index');
+        Route::get('tambah', [ProdukController::class, 'create'])->name('produk.create');
+        Route::post('/', [ProdukController::class, 'store'])->name('produk.store');
+        Route::get('detail/{id}', [ProdukController::class, 'show'])->name('produk.show');
+        Route::get('edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
+        Route::post('update/{id}', [ProdukController::class, 'update'])->name('produk.update');
+        Route::delete('/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+    });
+
+    // stok masuk
+
+    Route::resource('stokIn', StokInController::class);
+    // Route::get('stok', [StokInController::class, 'stok'])->name('stok.stok');
+    // Route::prefix('stokIn')->group(function () {
+    //     // Route::get('/', [StokInController::class, 'index'])->name('stokIn.index');
+    // });
 });

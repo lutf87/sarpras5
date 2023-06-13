@@ -1,22 +1,22 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Produk | Admin')
-@section('page-title', 'Produk')
+{{-- @section('tab-title' 'Stok Produk | Admin')
+@section('page-title' 'Stok Produk') --}}
 @section('contents')
     <div class="row">
         <div class="col">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Produk</h4>
+                    <h4 class="card-title">Tambah Kategori</h4>
                 </div>
                 <div class="card-body">
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('produk.create') }}" class="btn btn-success">Tambah Produk</a>
+                                <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a>
                             </div>
                             <div class="col-auto">
-                                <input type="text" name="keyword" id="keyword" class="form-control"
+                                <input type="text" name="keyword" class="form-control"
                                     placeholder="ketik keyword disini">
                             </div>
                             <div class="col-auto">
@@ -32,47 +32,45 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px">No</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col">Kode Produk</th>
-                                <th scope="col">Nama Produk</th>
-                                <th scope="col">Kategori</th>
+                                <th scope="col">Kode Kategori</th>
+                                <th scope="col">Jumlah Total</th>
+                                {{-- <th scope="col">Nama Kategori</th> --}}
                                 <th style="width: 150px" scope="col">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($produks as $produk)
+                            @forelse ($stoks as $data)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center">
-                                        <img src="{{ Storage::url('produk/') . $produk->foto_produk }}"
-                                            class="card-img img-thumbnails" style="max-height: 150px; max-width: 150px; overflow-x: hidden; overflow-y: hidden">
-                                    </td>
-                                    <td>{{ $produk->kode_produk }}</td>
-                                    <td>{{ $produk->nama_produk }}</td>
-                                    <td>{{ $produk->kategori->nama_kategori }}</td>
+                                    <td>{{ $data->produk->nama_produk }}</td>
+                                    <td></td>
+                                    {{-- <td>{{ $data->nama_kategori }}</td> --}}
                                     <td>
-                                        <form action="{{ route('produk.destroy', $produk->id) }}" method="POST">
-                                            <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-secondary">Detail</a>
-                                            {{-- <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary">Edit</a> --}}
+                                        <form action="{{ route('kategori.destroy', $data->id) }}" method="POST">
+                                            <a href="{{ route('kategori.edit', $data->id) }}"
+                                                class="btn btn-sm btn-primary">Ubah</a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            {{-- <button type="submit" class="btn btn-sm btn-danger">Hapus</button> --}}
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="submit"
+                                                class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete"
+                                                data-toggle="tooltip" title='Delete'>Hapus</button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Produk belum Tersedia.
+                                    Data Kategori belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
                     </table>
-                    {{-- {{ $produks->links() }} --}}
                 </div>
             </div>
         </div>
-        <div class="d-flex mt-2">
-            {!! $produks->links() !!}
+        <div class="d-fex mt-2">
+            {!! $stoks->links() !!}
         </div>
     </div>
     <script>

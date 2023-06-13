@@ -10,30 +10,33 @@
             </div>
             <div class="card-body">
                 <div class="row no-gutters ml-2 mb-2 mr-2">
-                    <div class="col-md-4">
-                        <img src="{{ Storage::url('produk/'. $produk->gambar) }}" class="card-img img-thumbnails"
-                            style="width: 300px">
+                    <div class="col-md-4 mb-2">
+                        <img src="{{ Storage::url('produk/'.$produk->foto_produk) }}" class="card-img img-thumbnails"
+                        style="max-height: 300px; max-width: 300px; overflow-x: hidden; overflow-y: hidden">
                     </div>
-                    <div class="col-md-1 mb-4"></div>
-                    <div class="col-md-7">
-                        <h5 class="card-title card-text mb-4">Nama : #</h5>
-                        <h5 class="card-title card-text mb-4">NIP : #</h5>
-                        {{-- <h5 class="card-title card-text mb-4">Produk Mapel : {{ $Produk->mapels->nama_mapel }}</h5> --}}
-                        <h5 class="card-title card-text mb-4">Jenis Kelamin : Laki-laki</h5>
-                        <h5 class="card-title card-text mb-4">Jenis Kelamin : Perempuan</h5>
-                        {{-- @if ()
-                        @else
-                        @endif --}}
-                        <h5 class="card-title card-text mb-4">Tempat Lahir : #</h5>
-                        <h5 class="card-title card-text mb-4">Tanggal Lahir :</h5>
-                        {{-- {{ date('l, d F Y', strtotime()) }} --}}
-                        <h5 class="card-title card-text mb-4">Alamat : #</h5>
-
+                    <div class="col-md-3">
+                        <h5 class="card-title card-text mb-4">Nama Produk</h5>
+                        <h5 class="card-title card-text mb-4">Kode Produk</h5>
+                        <h5 class="card-title card-text mb-4">Kategori Produk</h5>
+                        {{-- <h5 class="card-title card-text mb-4">Harga Beli Produk</h5>
+                        <h5 class="card-title card-text mb-4">Satuan Produk</h5>
+                        <h5 class="card-title card-text mb-4">Tanggal Beli</h5>
+                        <h5 class="card-title card-text mb-4">Jumlah Produk</h5> --}}
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="card-title card-text mb-4">: {{ $produk->nama_produk }}</h5>
+                        <h5 class="card-title card-text mb-4">: {{ $produk->kode_produk }}</h5>
+                        <h5 class="card-title card-text mb-4">: {{ $produk->kategori->nama_kategori }}</h5>
+                        {{-- <h5 class="card-title card-text mb-4">: {{ $format }}</h5>
+                        <h5 class="card-title card-text mb-4">: {{ $produk->satuan_produk }}</h5>
+                        <h5 class="card-title card-text mb-4">: {{ $tanggal_beli }}</h5>
+                        <h5 class="card-title card-text mb-4">: {{ $sum }}</h5> --}}
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="#" name="kembali" class="btn btn-default" id="back"><i
+                    <a href="{{ route('produk.index') }}" name="kembali" class="btn btn-danger" id="back"><i
                             class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
+                    <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

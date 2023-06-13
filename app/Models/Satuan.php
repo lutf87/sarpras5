@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tempat extends Model
+class Satuan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama_tempat', 'created_at', 'updated_at'
+        'nama_satuan', 'craeted_at', 'updated_at'
     ];
 
-    function produk(){
+    function stok_in() {
         $this->hasMany(StokIn::class);
     }
+
 }

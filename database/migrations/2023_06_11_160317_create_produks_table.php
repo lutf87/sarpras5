@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('kode_produk', 25)->unique();
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->foreign('kategori_id')->references('id')->on('kategoris');
-            $table->string('harga_beli', 12)->nullable();
-            $table->string('satuan_produk', 25)->nullable();
-            $table->date('tgl_beli', 20)->nullable();
-            $table->integer('jml_produk');
-            $table->string('gambar', 50)->nullable();
+            // $table->unsignedBigInteger('satuan_id')->nullable();
+            // $table->foreign('satuan_id')->references('id')->on('satuans');
+            // $table->unsignedBigInteger('tempat_id')->nullable();
+            // $table->foreign('tempat_id')->references('id')->on('tempats');
+            // $table->string('harga_beli', 12)->nullable();
+            // $table->date('tgl_beli', 20)->nullable();
+            // $table->integer('jml_produk');
+            $table->string('foto_produk', 50)->nullable();
             $table->timestamps();
         });
     }
