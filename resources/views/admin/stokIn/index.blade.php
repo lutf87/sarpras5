@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Produk | Admin')
-@section('page-title', 'Produk')
+@section('tab-title', 'Stok Masuk | Admin')
+@section('page-title', 'Stok Masuk')
 @section('contents')
     <div class="row">
         <div class="col">
@@ -60,7 +60,7 @@
                                     <td>{{ $stokIn->jml_produk }} - {{ $stokIn->satuan->nama_satuan }}</td>
                                     <td>
                                         <form action="#" method="POST">
-                                            <a href="#" class="btn btn-sm btn-secondary">Detail</a>
+                                            <a href="{{ route('stokIn.edit', $stokIn->id) }}" class="btn btn-sm btn-secondary">Detail</a>
                                             {{-- <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary">Edit</a> --}}
                                             @csrf
                                             @method('DELETE')

@@ -26,6 +26,7 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate(
             [
                 'nama_produk' => 'required',
@@ -45,8 +46,12 @@ class ProdukController extends Controller
             ]
         );
 
-        $img_name = time() . '_' . $request->nama_produk . '.' . $request->foto_produk->extension();
-        $request->foto_produk->storeAs('produk', $img_name);
+        if($request->file('foto_produk')){
+            $img_name = time() . '_' . $request->nama_produk . '.' . $request->foto_produk->extension();
+            $request->foto_produk->storeAs('produk', $img_name);
+            $produk['foto_produk'] = $img_name;
+        }
+
 
         // if ($request->file('foto_produk')) {
         // $img_name = time() . '_' . $request->nama_produk;
@@ -67,7 +72,6 @@ class ProdukController extends Controller
         $produk['nama_produk'] = Str::title($request->input('nama_produk'));
         $produk['kode_produk'] = strtoupper($kode . $request->input('kode_produk'));
         $produk['kategori_id'] = $request->input('kategori_produk');
-        $produk['foto_produk'] = $img_name;
         // $produk['harga_beli'] = $hrg_int;
         // $produk['satuan_produk'] = $request->input('satuan_produk');
         // $produk['tgl_beli'] = $request->input('tgl_beli');

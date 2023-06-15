@@ -105,7 +105,8 @@ class StokInController extends Controller
     {
         $stokIn = StokIn::findOrFail($id);
         $produks = Produk::orderBy('nama_produk')->get();
-        return view('admin.stokIn.edit', compact('stokIns', 'produk'));
+        $tempats = Tempat::orderBy('nama_tempat')->get();
+        return view('admin.stokIn.edit', compact('stokIn', 'produks', 'tempats'));
     }
 
     /**
@@ -117,7 +118,14 @@ class StokInController extends Controller
      */
     public function update(Request $request, StokIn $stokIn)
     {
-        //
+        $request->validate(
+            [
+                'produk_id' => 'required',
+            ],
+            [
+                'produk_id.required' => 'Nama Produk Harus Dipilih'
+            ]
+        );
     }
 
     /**

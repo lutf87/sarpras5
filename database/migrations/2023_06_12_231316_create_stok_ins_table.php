@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('produk_id');
             $table->foreign('produk_id')->references('id')->on('produks');
-            $table->unsignedBigInteger('satuan_id');
-            $table->foreign('satuan_id')->references('id')->on('satuans');
+            // $table->unsignedBigInteger('satuan_id');
+            // $table->foreign('satuan_id')->references('id')->on('satuans');
             $table->unsignedBigInteger('tempat_id');
             $table->foreign('tempat_id')->references('id')->on('tempats');
             $table->integer('harga_beli')->nullable();

@@ -42,7 +42,7 @@ class KategoriController extends Controller
         $request->validate(
             [
                 'nama_kategori' => 'required',
-                'kode_kategori' => 'unique:kategoris,kode_kategori|required|regex:/^\S*$/u',
+                'kode_kategori' => 'unique:kategoris,kode_kategori|regex:/^\S*$/u',
             ],
             [
                 'nama_kategori' => 'Nama kategori harus diisi',
@@ -51,22 +51,22 @@ class KategoriController extends Controller
                 'kode_kategori.regex' => 'Maaf kode kategori tidak boleh ada spasi'
             ]
         );
-        $kode = "ST/KAT-";
+        // $kode = "ST/KAT-";
 
         Kategori::create(
             [
                 'nama_kategori' => Str::title($request->input('nama_kategori')),
-                'kode_kategori' => strtoupper($kode . $request->input('kode_kategori'))
+                'kode_kategori' => strtoupper($request->input('kode_kategori'))
             ]
         );
 
         if (!$request) {
             // Toastr::error('Data gagal Disimpan', 'Gagal', ["positionClass" => "toast-top-full-width"]);
-            toast('Kategori gagal disimpan','error')->autoClose(1500);
+            toast('Kategori gagal disimpan', 'error')->autoClose(1500);
             return redirect()->route('kategori.create');
         } else {
             // Toastr::success('Data berhasil Disimpan', 'Berhasil', ["positionClass" => "toast-top-center"]);
-            toast('Kategori berhasil disimpan','success')->autoClose(1500);
+            toast('Kategori berhasil disimpan', 'success')->autoClose(1500);
             return redirect()->route('kategori.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
@@ -120,11 +120,11 @@ class KategoriController extends Controller
 
         if (!$request) {
             // Toastr::error('Data gagal Disimpan', 'Gagal', ["positionClass" => "toast-top-full-width"]);
-            toast('Kategori gagal diupdate','error')->autoClose(1500);
+            toast('Kategori gagal diupdate', 'error')->autoClose(1500);
             return redirect()->route('kategori.create');
         } else {
             // Toastr::success('Data berhasil Disimpan', 'Berhasil', ["positionClass" => "toast-top-center"]);
-            toast('Kategori berhasil diupdate','success')->autoClose(1500);
+            toast('Kategori berhasil diupdate', 'success')->autoClose(1500);
             return redirect()->route('kategori.index')->with(['success' => 'Data berhasil disimpan!']);
         }
     }
@@ -140,7 +140,7 @@ class KategoriController extends Controller
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
         // Toastr::success('Kategori berhasil Dihapus', 'Berhasil', ["positionClass" => "toast-top-center"]);
-        toast('Kategori berhasil dihapus','success')->autoClose(1500);
+        toast('Kategori berhasil dihapus', 'success')->autoClose(1500);
         return redirect()->route('kategori.index');
     }
 }
