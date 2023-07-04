@@ -28,7 +28,9 @@ class PinjamController extends Controller
      */
     public function create()
     {
-        $produks = Produk::orderBy('kategori_id', 'asc')->get();
+        $produks = Produk::orderBy('kategori_id', 'asc')
+            ->whereIn('pinjam', ['ya'])
+            ->get();
         return view('admin.peminjaman.create', compact('produks'))->with('no', 1);
     }
 

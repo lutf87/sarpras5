@@ -27,7 +27,9 @@ class StokOutController extends Controller
      */
     public function create()
     {
-        $produks = Produk::orderBy('id')->get();
+        $produks = Produk::orderBy('kategori_id', 'asc')
+            ->whereIn('pinjam', ['tidak'])
+            ->get();
         return view('admin.stokOut.create', compact('produks'));
     }
 

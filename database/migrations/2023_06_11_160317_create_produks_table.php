@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('kode_produk', 25)->unique();
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->unsignedBigInteger('tempat_id')->nullable();
-            $table->enum('pinjam', ['1', '2'])->default(1);
+            $table->string('pinjam', 10);
             $table->integer('qty')->nullable();
             $table->string('foto_produk', 50)->nullable();
             $table->timestamps();

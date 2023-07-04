@@ -13,6 +13,7 @@
                     <form action="#">
                         <div class="row">
                             <div class="col">
+                                <a href="{{ route('stokAll.export') }}" class="btn btn-warning">Export Total</a>
                                 {{-- <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a> --}}
                             </div>
                             <div class="col-auto">

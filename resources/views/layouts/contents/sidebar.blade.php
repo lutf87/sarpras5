@@ -36,8 +36,8 @@
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ route('stok.index') }}">Stok</a>
-                        <a class="nav-link" href="{{ route('stokIn.index') }}">Stok Masuk</a>
-                        <a class="nav-link" href="{{ route('stokOut.index') }}">Stok Keluar</a>
+                        <a class="nav-link" href="{{ route('stokIn.index') }}">Barang Masuk</a>
+                        <a class="nav-link" href="{{ route('stokOut.index') }}">Barang Keluar</a>
                     </nav>
                 </div>
 

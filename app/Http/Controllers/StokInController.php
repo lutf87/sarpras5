@@ -6,6 +6,9 @@ use App\Models\Produk;
 use App\Models\Satuan;
 use App\Models\StokIn;
 use App\Models\Tempat;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StockExport;
+use App\Exports\StockAllExport;
 use Illuminate\Http\Request;
 
 class StokInController extends Controller
@@ -207,5 +210,15 @@ class StokInController extends Controller
             return redirect()->route('stokIn.index');
         }
 
+    }
+
+    public function export()
+    {
+        return Excel::download(new StockExport, 'barang_masuk.xlsx');
+    }
+
+    public function total()
+    {
+        return Excel::download(new StockAllExport, 'total_barang.xlsx');
     }
 }

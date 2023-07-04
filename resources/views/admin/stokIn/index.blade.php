@@ -14,6 +14,7 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{ route('stokIn.create') }}" class="btn btn-success">Tambah Stok</a>
+                                <a href="{{ route('stokIn.export') }}" class="btn btn-warning ms-2">Export Excel</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"

@@ -43,6 +43,17 @@
                                         class="form-control @error('nama_produk') is-invalid @enderror" autofocus />
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="nama_produk" class="form-label">Gunakan Produk Untuk Dipinjam</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="radio" id="html" name="fav_language" value="ya">
+                                            <label for="html" class="me-3">Ya</label>
+                                            <input type="radio" id="css" name="fav_language" value="tidak">
+                                            <label for="css">Tidak</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="kode_produk" class="form-label">Kode Produk</label>
                                     <input type="text" id="kode_produk" name="kode_produk"
                                         style="text-transform: uppercase"

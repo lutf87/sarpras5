@@ -9,6 +9,7 @@ use App\Http\Controllers\StokOutController;
 use App\Http\Controllers\TempatController;
 use App\Http\Controllers\PinjamController;
 use App\Http\Controllers\KembaliController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,14 +23,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'autenthicating'])->middleware('guest');
+Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 
-Route::prefix('admin')->group(function () {
+
+Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
+
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     // kategori
     Route::prefix('kategori')->group(function () {
         Route::get('/', [KategoriController::class, 'index'])->name('kategori.index');
@@ -52,6 +58,10 @@ Route::prefix('admin')->group(function () {
     });
 
     // stok masuk
+    Route::prefix('stokIn')->group(function () {
+        Route::get('/export-excel', [StokInController::class, 'export'])->name('stokIn.export');
+        Route::get('/export-total', [StokInController::class, 'total'])->name('stokAll.export');
+    });
 
     Route::resource('stokIn', StokInController::class);
     Route::resource('stokOut', StokOutController::class);
@@ -65,3 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/{id}', [PinjamController::class, 'pengembalian'])->name('pengembalian.update');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

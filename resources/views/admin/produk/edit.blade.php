@@ -42,6 +42,17 @@
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="nama_produk" class="form-label">Gunakan Produk Untuk Dipinjam</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="radio" id="html" name="pinjam" value="ya" checked>
+                                            <label for="html" class="me-3">Ya</label>
+                                            <input type="radio" id="css" name="pinjam" value="tidak">
+                                            <label for="css">Tidak</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="foto_produk" class="form-label">Foto Produk</label>
                                     <input type="file" id="foto_produk" name="foto_produk"
                                         class="form-control @error('foto_produk') is-invalid @enderror"

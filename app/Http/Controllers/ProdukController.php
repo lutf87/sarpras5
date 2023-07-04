@@ -34,11 +34,13 @@ class ProdukController extends Controller
                 'nama_produk' => 'unique:produks|required',
                 'kode_produk' => 'unique:produks,kode_produk|required|regex:/^\S*$/u',
                 'kategori_produk' => 'required',
+                'pinjam' => 'required',
                 'foto_produk' => 'image|mimes:jpeg,png,jpg,webp|file|max:2048',
             ],
             [
                 'kode_produk.required' => 'Kode produk harus diisi',
                 'kategori_produk' => 'Kategori produk harus diisi',
+                'pinjam.required' => 'harap Dipilih',
                 'nama_produk.unique' => 'Nama produk ini sudah ada',
                 'nama_produk.required' => 'Nama produk harus diisi',
                 'kode_produk.unique' => 'Kode produk ini sudah ada',
@@ -55,9 +57,20 @@ class ProdukController extends Controller
             $produk['foto_produk'] = $img_name;
         }
 
+        $pjm = $request->input('pinjam');
+
+        if ($pjm == 'ya') {
+            $ok = "ya";
+            $produk['pinjam'] = $ok;
+        } elseif ($choice == 'tidak') {
+            $ko = "tidak";
+            $produk['pinjam'] = $ko;
+        }
+
         $produk['nama_produk'] = Str::title($request->input('nama_produk'));
         $produk['kode_produk'] = strtoupper($request->input('kode_produk'));
         $produk['kategori_id'] = $request->input('kategori_produk');
+        $produk['pinjam'] = $request->input('pinjam');
 
         // dd($produk);
         Produk::create($produk);
@@ -98,17 +111,29 @@ class ProdukController extends Controller
                 'nama_produk' => 'required',
                 'kode_produk' => 'required|regex:/^\S*$/u',
                 'kategori_produk' => 'required',
+                'pinjam' => 'required',
                 'foto_produk' => 'image|mimes:jpeg,png,jpg,webp|file|max:2048',
             ],
             [
                 'nama_produk' => 'Nama produk harus diisi',
                 'kode_produk' => 'Kode produk harus diisi',
                 'kategori_produk' => 'Kategori produk harus diisi',
+                'pinjam.required' => 'Harap Dipilih',
                 'kode_produk.regex' => 'Maaf kode produk tidak boleh ada spasi',
                 'foto_produk.image' => 'Format foto produk yang dapat diinputkan adalah jpeg, png, jpg, dan webp',
                 'foto_produk.file.max' => 'Maksimal ukuran foto yang dapat diinputkan adalah 2 Mb'
             ]
         );
+
+        $pjm = $request->input('pinjam');
+
+            if ($pjm == 'ya') {
+                $ok = "ya";
+                $produk->update(['pinjam' => $ok]);
+            } elseif ($pjm == 'tidak') {
+                $ko = "tidak";
+                $produk->update(['pinjam' => $ko]);
+            }
 
         if ($request->hasFile('foto_produk')) {
 
