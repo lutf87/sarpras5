@@ -1,11 +1,10 @@
-<footer class="py-4 bg-light mt-auto">
+<footer class="py-4 bg-dark mt-3">
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Aisyah 2023</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
+            <div class="text-muted">Copyright &copy; Sarpras STMIK PPKIA PRADNYA PARAMITA
+                <script>
+                    document.write(new Date().getFullYear());
+                </script> &diams;
             </div>
         </div>
     </div>

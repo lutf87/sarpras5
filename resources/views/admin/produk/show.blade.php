@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row no-gutters ml-2 mb-2 mr-2">
                     <div class="col-md-4 mb-2">
-                        <img src="{{ Storage::url('produk/'.$produk->foto_produk) }}" class="card-img img-thumbnails"
+                        <img src="{{ asset('storage/produk/'.$produk->foto_produk) }}" class="card-img img-thumbnails"
                         style="max-height: 300px; max-width: 300px; overflow-x: hidden; overflow-y: hidden">
                     </div>
                     <div class="col-md-3">

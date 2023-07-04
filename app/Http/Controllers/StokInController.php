@@ -20,8 +20,8 @@ class StokInController extends Controller
         $stokIns = StokIn::paginate(10);
         $produk = Produk::orderBy('nama_produk')->get();
         $tempat = Tempat::orderBy('nama_tempat')->get();
-        $satuan = Satuan::orderBy('nama_satuan')->get();
-        return view('admin.stokIn.index', compact('produk', 'stokIns', 'tempat', 'satuan'))->with('no', 1);
+        return view('admin.stokIn.index', compact('produk', 'stokIns', 'tempat'))->with('no', 1);
+        // dd($hrg);
     }
 
     /**
@@ -31,10 +31,9 @@ class StokInController extends Controller
      */
     public function create()
     {
-        $produks = Produk::orderBy('id')->get();
-        $tempats = Tempat::orderBy('nama_tempat')->get();
-        $satuans = Satuan::orderBy('nama_satuan')->get();
-        return view('admin.stokIn.create', compact('produks', 'tempats', 'satuans'));
+        $produks = Produk::orderBy('kategori_id', 'asc')->get();
+        $tempats = Tempat::orderBy('id')->get();
+        return view('admin.stokIn.create', compact('produks', 'tempats'))->with('no', 1);
     }
 
     /**
@@ -47,14 +46,16 @@ class StokInController extends Controller
     {
         $request->validate(
             [
-                'nama_produk' => 'required',
-                'nama_satuan' => 'required',
-                'nama_tempat' =>'required'
+                'produk_id' => 'required',
+                'nama_tempat' =>'required',
+                'qty' => 'required',
+                // 'harga_beli' => 'required'
             ],
             [
-                'nama_produk.required' => 'Produk harus diisi',
-                'nama_satuan.required' => 'Satuan harus diisi',
-                'nama_tempat.required' => 'Penempatan harus diisi'
+                'produk_id.required' => 'Produk harus diisi',
+                'qty.required' => 'Jumlah Produk harus diisi',
+                'nama_tempat.required' => 'Penempatan harus diisi',
+                // 'harga_beli.required' => 'Harga Beli harus diisi'
             ]
         );
 
@@ -65,13 +66,17 @@ class StokInController extends Controller
             $hrg_int = intval($hrg_str); // mendapatkan nilai integer
         }
 
-        $stokIn['produk_id'] = $request->input('nama_produk');
-        $stokIn['satuan_id'] = $request->input('nama_satuan');
+        $stokIn['produk_id'] = $request->input('produk_id');
         $stokIn['tempat_id'] = $request->input('nama_tempat');
         $stokIn['harga_beli'] = $hrg_int;
         $stokIn['tgl_beli'] = $request->input('tgl_beli');
-        $stokIn['jml_produk'] = $request->input('jml_produk');
+        $stokIn['qty'] = $request->input('qty');
         StokIn::create($stokIn);
+        // dd($stokIn);
+
+        $produk = Produk::findOrFail($request->produk_id);
+        $produk->qty += $request->qty;
+        $produk->save();
 
         if (!$request) {
             toast('Stok Masuk gagal ditambahkan','error')->autoClose(1500);
@@ -116,16 +121,58 @@ class StokInController extends Controller
      * @param  \App\Models\StokIn  $stokIn
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StokIn $stokIn)
+    public function update(Request $request, $id)
     {
+        $stokIn = StokIn::findOrFail($id);
+        try {
+            $produk = Produk::findOrFail($request->produk_id);
+            $produk->qty -= $stokIn->qty;
+            $produk->update();
+        } catch (Exception $e) {
+            return redirect()->route('stokIn.edit').$e->message();
+        }
         $request->validate(
             [
                 'produk_id' => 'required',
+                'penempatan' => 'required',
+                'qty' => 'required'
             ],
             [
-                'produk_id.required' => 'Nama Produk Harus Dipilih'
+                'produk_id.required' => 'Nama Produk Harus Dipilih',
+                'penempatan.required' => 'Penempatan Produk Harus Dipiplih',
+                'qty.required' => 'Jumlah Produk Harus Diisi'
             ]
         );
+
+        // dd($request);
+        $prod = Produk::findOrFail($request->produk_id);
+        $prod->qty += $request->qty;
+        $prod->update();
+
+        if($request->harga_beli)
+        {
+            $in_hrg = $request->input('harga_beli');  // menangkap req input harga yang berupa string
+            $hrg_str = preg_replace("/[^0-9]/", "", $in_hrg);  // Menghapus karakter non-angka(string)
+            $hrg_int = intval($hrg_str); // mendapatkan nilai integer
+        }
+
+        $stokIn->update(
+            [
+                'produk_id' => $request->input('produk_id'),
+                'tempat_id' => $request->input('penempatan'),
+                'harga_beli' => $hrg_int,
+                'tgl_beli' => $request->input('tgl_beli'),
+                'qty' => $request->input('qty'),
+            ]
+        );
+
+        if(!$request) {
+            toast('Stok gagal diupdate', 'error')->autoClose(1500);
+            return redirect()->route('stokIn.index');
+        } else {
+            toast('Stok berhasil diupdate', 'success')->autoClose(1500);
+            return redirect()->route('stokIn.index');
+        }
     }
 
     /**
@@ -134,13 +181,31 @@ class StokInController extends Controller
      * @param  \App\Models\StokIn  $stokIn
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StokIn $stokIn)
+    public function destroy(Request $request, $id)
     {
-        //
-    }
+        $stokIn = StokIn::findOrFail($id);
+        $produk = $stokIn->produk;
 
-    public function stok() {
-        $jml = StokIn::orderBy('jml_produk')->get();
-        dd($jml);
+        if (($produk->qty - $stokIn->qty) < 0) {
+            toast('Maaf Stok Anda Nanti Minus', 'error')->autoclose(1500);
+            return redirect()->route('stokIn.index');
+        } elseif($produk->qty > 0) {
+            $produk->qty -= $stokIn->qty;
+            $produk->save();
+
+            $stokIn->delete();
+
+            toast('Stok Berhasil Dihapus', 'success')->autoClose(1500);
+            return redirect()->route('stokIn.index');
+        } elseif($produk->qty == 0){
+            $produk->qty -= 0;
+            $produk->save();
+
+            $stokIn->delete();
+
+            toast('Stok Berhasil Dihapus', 'success')->autoClose(1500);
+            return redirect()->route('stokIn.index');
+        }
+
     }
 }

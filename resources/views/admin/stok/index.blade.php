@@ -7,13 +7,13 @@
         <div class="col">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Kategori</h4>
+                    <h4 class="card-title">Total Stok</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body mb-0">
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a>
+                                {{-- <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a> --}}
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" class="form-control"
@@ -28,49 +28,37 @@
                     </form>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px">No</th>
-                                <th scope="col">Kode Kategori</th>
-                                <th scope="col">Jumlah Total</th>
-                                {{-- <th scope="col">Nama Kategori</th> --}}
-                                <th style="width: 150px" scope="col">Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($stoks as $data)
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $data->produk->nama_produk }}</td>
-                                    <td></td>
-                                    {{-- <td>{{ $data->nama_kategori }}</td> --}}
-                                    <td>
-                                        <form action="{{ route('kategori.destroy', $data->id) }}" method="POST">
-                                            <a href="{{ route('kategori.edit', $data->id) }}"
-                                                class="btn btn-sm btn-primary">Ubah</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            {{-- <button type="submit" class="btn btn-sm btn-danger">Hapus</button> --}}
-                                            <input name="_method" type="hidden" value="DELETE">
-                                            <button type="submit"
-                                                class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete"
-                                                data-toggle="tooltip" title='Delete'>Hapus</button>
-                                        </form>
-                                    </td>
+                                    <th style="width: 50px">No</th>
+                                    <th scope="col">Nama Produk</th>
+                                    <th scope="col">Kategori</th>
+                                    <th scope="col">Total Stok</th>
                                 </tr>
-                            @empty
-                                <div class="alert alert-danger">
-                                    Data Kategori belum Tersedia.
-                                </div>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($produks as $produk)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $produk->nama_produk }}</td>
+                                        <td>{{ $produk->kategori->nama_kategori }}</td>
+                                        <td>{{ $produk->qty }}</td>
+                                    </tr>
+                                @empty
+                                    <div class="alert alert-danger">
+                                        Data Belum Tersedia.
+                                    </div>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="d-fex mt-2">
-            {!! $stoks->links() !!}
+            {!! $produks->links() !!}
         </div>
     </div>
     <script>

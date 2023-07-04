@@ -5,6 +5,10 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\StokInController;
+use App\Http\Controllers\StokOutController;
+use App\Http\Controllers\TempatController;
+use App\Http\Controllers\PinjamController;
+use App\Http\Controllers\KembaliController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard', [DashboardController::class, 'index']);
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 
 Route::prefix('admin')->group(function () {
@@ -50,8 +54,14 @@ Route::prefix('admin')->group(function () {
     // stok masuk
 
     Route::resource('stokIn', StokInController::class);
-    // Route::get('stok', [StokInController::class, 'stok'])->name('stok.stok');
-    // Route::prefix('stokIn')->group(function () {
-    //     // Route::get('/', [StokInController::class, 'index'])->name('stokIn.index');
-    // });
+    Route::resource('stokOut', StokOutController::class);
+    Route::resource('stok', StokController::class);
+    Route::resource('tempat', TempatController::class);
+    Route::resource('peminjaman', PinjamController::class);
+    // Route::resource('pengembalian', KembaliController::class);
+    Route::prefix('pengembalian')->group(function () {
+        Route::get('/', [PinjamController::class, 'pengembalianIndex'])->name('pengembalian.index');
+        Route::get('edit/{id}', [PinjamController::class, 'pengembalianEdit'])->name('pengembalian.edit');
+        Route::put('/{id}', [PinjamController::class, 'pengembalian'])->name('pengembalian.update');
+    });
 });

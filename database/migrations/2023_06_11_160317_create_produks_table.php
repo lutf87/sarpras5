@@ -18,16 +18,14 @@ return new class extends Migration
             $table->string('nama_produk', 100);
             $table->string('kode_produk', 25)->unique();
             $table->unsignedBigInteger('kategori_id')->nullable();
-            $table->foreign('kategori_id')->references('id')->on('kategoris');
-            // $table->unsignedBigInteger('satuan_id')->nullable();
-            // $table->foreign('satuan_id')->references('id')->on('satuans');
-            // $table->unsignedBigInteger('tempat_id')->nullable();
-            // $table->foreign('tempat_id')->references('id')->on('tempats');
-            // $table->string('harga_beli', 12)->nullable();
-            // $table->date('tgl_beli', 20)->nullable();
-            // $table->integer('jml_produk');
+            $table->unsignedBigInteger('tempat_id')->nullable();
+            $table->enum('pinjam', ['1', '2'])->default(1);
+            $table->integer('qty')->nullable();
             $table->string('foto_produk', 50)->nullable();
             $table->timestamps();
+
+            $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
+            $table->foreign('tempat_id')->references('id')->on('tempats')->onDelete('cascade');
         });
     }
 

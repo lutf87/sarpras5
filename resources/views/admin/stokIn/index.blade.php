@@ -32,14 +32,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px">No</th>
-                                {{-- <th scope="col">Gambar</th> --}}
-                                {{-- <th scope="col">Kode Produk</th> --}}
                                 <th scope="col">Nama Produk</th>
-                                {{-- <th scope="col">Kategori</th> --}}
                                 <th scope="col">Penempatan</th>
                                 <th scope="col">Harga Beli</th>
                                 <th scope="col">Tanggal Beli</th>
-                                <th scope="col">Jumlah - Satuan</th>
+                                <th scope="col">Jumlah Produk Masuk</th>
                                 <th style="width: 150px" scope="col">Opsi</th>
                             </tr>
                         </thead>
@@ -47,25 +44,26 @@
                             @forelse ($stokIns as $stokIn)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    {{-- <td class="text-center">
-                                        <img src="{{ Storage::url('/') . $produk->foto_produk }}"
-                                            class="card-img img-thumbnails" style="max-height: 150px; max-width: 150px; overflow-x: hidden; overflow-y: hidden">
-                                    </td> --}}
-                                    {{-- <td>{{ $produk->kode_produk }}</td> --}}
                                     <td>{{ $stokIn->produk->nama_produk }}</td>
-                                    {{-- <td>{{ $produk->kategori->nama_kategori }}</td> --}}
                                     <td>{{ $stokIn->tempat->nama_tempat }}</td>
                                     <td>{{ $stokIn->harga_beli }}</td>
-                                    <td>{{ $stokIn->tgl_beli }}</td>
-                                    <td>{{ $stokIn->jml_produk }} - {{ $stokIn->satuan->nama_satuan }}</td>
+                                    <td>{{ $stokIn->tgl_beli->isoFormat('dddd, DD MMMM Y') }}</td>
+                                    <td>{{ $stokIn->qty }}</td>
                                     <td>
-                                        <form action="#" method="POST">
-                                            <a href="{{ route('stokIn.edit', $stokIn->id) }}" class="btn btn-sm btn-secondary">Detail</a>
-                                            {{-- <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary">Edit</a> --}}
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                        </form>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <a href="{{ route('stokIn.edit', $stokIn->id) }}"
+                                                    class="btn btn-sm btn-secondary">Edit</a>
+                                            </div>
+                                            <div class="col-auto">
+                                                <form action="{{ route('stokIn.destroy', $stokIn->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete">Hapus</button>
+                                                    <div class="row">
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

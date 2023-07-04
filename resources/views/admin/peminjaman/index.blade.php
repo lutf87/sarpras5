@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Produk | Admin')
-@section('page-title', 'Produk')
+@section('tab-title', 'Peminjaman | Admin')
+@section('page-title', 'Peminjaman')
 @section('contents')
     <div class="row">
         <div class="col">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Produk</h4>
+                    <h4 class="card-title">Peminjaman Produk</h4>
                 </div>
                 <div class="card-body">
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('produk.create') }}" class="btn btn-success">Tambah Produk</a>
+                                <a href="{{ route('peminjaman.create') }}" class="btn btn-success">Tambah Peminjaman</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"
@@ -32,28 +32,31 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px">No</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col">Kode Produk</th>
                                 <th scope="col">Nama Produk</th>
-                                <th scope="col">Kategori</th>
+                                <th scope="col">Kode Pinjam</th>
+                                <th scope="col">Peminjam</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Kondisi Pinjam</th>
+                                <th scope="col">Tanggal Pinjam</th>
+                                <th scope="col">Status</th>
                                 <th style="width: 150px" scope="col">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($produks as $produk)
+                            @forelse ($pinjams as $pinjam)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center">
-                                        <img src="{{ asset('storage/produk/' . $produk->foto_produk) }}"
-                                            class="card-img img-thumbnails" style="max-height: 150px; max-width: 150px; overflow-x: hidden; overflow-y: hidden">
-                                    </td>
-                                    <td>{{ $produk->kode_produk }}</td>
-                                    <td>{{ $produk->nama_produk }}</td>
-                                    <td>{{ $produk->kategori->nama_kategori }}</td>
+                                    <td>{{ $pinjam->produk->nama_produk }}</td>
+                                    <td>{{ $pinjam->kode_pinjam }}</td>
+                                    <td>{{ $pinjam->peminjam }}</td>
+                                    <td>{{ $pinjam->jumlah }}</td>
+                                    <td>{{ $pinjam->kondisi_pinjam }}</td>
+                                    <td>{{ $pinjam->tgl_pinjam->isoFormat('dddd, DD MMMM Y') }}</td>
+                                    <td>{{ $pinjam->status }}</td>
                                     <td>
-                                        <form action="{{ route('produk.destroy', $produk->id) }}" method="POST">
+                                        <form action="{{ route('peminjaman.destroy', $pinjam->id) }}" method="POST">
                                             {{-- <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-secondary">Detail</a> --}}
-                                            <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{{ route('peminjaman.edit', $pinjam->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete">Hapus</button>
@@ -62,7 +65,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Produk belum Tersedia.
+                                    Data Peminjaman Belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
@@ -72,7 +75,7 @@
             </div>
         </div>
         <div class="d-flex mt-2">
-            {!! $produks->links() !!}
+            {!! $pinjams->links() !!}
         </div>
     </div>
     <script>

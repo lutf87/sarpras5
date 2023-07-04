@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('satuans', function (Blueprint $table) {
+        Schema::create('stok_outs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_satuan', 50);
+            $table->unsignedBigInteger('produk_id');
+            $table->foreign('produk_id')->references('id')->on('produks');
+            $table->integer('qty')->nullable();
+            $table->string('pemohon', 100)->nullable();
+            $table->string('keterangan', 100)->nullable()->default('Tanpa Keterangan');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('satuans');
+        Schema::dropIfExists('stok_outs');
     }
 };

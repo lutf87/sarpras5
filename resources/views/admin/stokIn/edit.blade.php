@@ -17,9 +17,9 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group mb-3">
-                                    <label for="nama_produk" class="form-label">Nama Produk</label>
-                                    <select class="form-select @error('nama_produk') is-invalid @enderror" id="nama_produk"
-                                        name="nama_produk">
+                                    <label for="produk_id" class="form-label">Nama Produk</label>
+                                    <select class="form-select @error('produk_id') is-invalid @enderror" id="produk_id"
+                                        name="produk_id" autofocus>
                                         <option value="">Pilih Nama Produk</option>
                                         @foreach ($produks as $produk)
                                             <option value="{{ $produk->id }}"
@@ -27,6 +27,24 @@
                                                 {{ $produk->nama_produk }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="harga_beli" class="form-label">Harga Beli Produk</label>
+                                    <input type="text" id="harga_beli" name="harga_beli"
+                                        class="uang form-control @error('harga_beli') is-invalid @enderror"
+                                        value="{{ old('harga_beli', $stokIn->harga_beli) }}"/>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="tgl_beli" class="form-label">Tanggal Beli</label>
+                                    <input type="date" id="tgl_beli" name="tgl_beli"
+                                        class="form-control @error('tgl_beli') is-invalid @enderror"
+                                        value="{{ old('tgl_beli', $stokIn->tgl_beli) }}">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="qty" class="form-label">Jumlah Produk Masuk</label>
+                                    <input type="number" id="qty" name="qty"
+                                        class="form-control @error('qty') is-invalid @enderror"
+                                        value="{{ old('qty', $stokIn->qty) }}">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="penempatan" class="form-label">Penempatan</label>
@@ -40,26 +58,6 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="harga_beli" class="form-label">Harga Beli</label>
-                                    <input type="number" id="harga_beli" name="harga_beli"
-                                        class="form-control @error('harga_beli') is-invalid @enderror"
-                                        value="{{ old('harga_beli', $stokIn->harga_beli) }}">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group mb-3">
-                                    <label for="tgl_beli" class="form-label">Tanggal Beli</label>
-                                    <input type="date" id="tgl_beli" name="tgl_beli"
-                                        class="form-control @error('tgl_beli') is-invalid @enderror"
-                                        value="{{ old('tgl_beli', $stokIn->tgl_beli) }}">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="jml_produk" class="form-label">Jumlah Produk</label>
-                                    <input type="number" id="jml_produk" name="jml_produk"
-                                        class="form-control @error('jml_produk') is-invalid @enderror"
-                                        value="{{ old('jml_produk', $stokIn->jml_produk) }}">
                                 </div>
                             </div>
                         </div>

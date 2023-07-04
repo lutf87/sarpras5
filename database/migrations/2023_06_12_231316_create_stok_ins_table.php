@@ -16,14 +16,12 @@ return new class extends Migration
         Schema::create('stok_ins', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('produk_id');
-            $table->foreign('produk_id')->references('id')->on('produks');
-            // $table->unsignedBigInteger('satuan_id');
-            // $table->foreign('satuan_id')->references('id')->on('satuans');
+            $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
             $table->unsignedBigInteger('tempat_id');
-            $table->foreign('tempat_id')->references('id')->on('tempats');
+            $table->foreign('tempat_id')->references('id')->on('tempats')->onDelete('cascade');
             $table->integer('harga_beli')->nullable();
             $table->date('tgl_beli', 20)->nullable();
-            $table->integer('jml_produk')->nullable();
+            $table->integer('qty')->nullable();
             $table->timestamps();
         });
     }

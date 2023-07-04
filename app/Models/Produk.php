@@ -10,7 +10,7 @@ class Produk extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_produk', 'kode_produk', 'kategori_id', 'foto_produk'
+        'nama_produk', 'kode_produk', 'kategori_id', 'harga_produk', 'pinjam', 'qty', 'foto_produk'
     ];
 
     public function kategori()
@@ -20,5 +20,9 @@ class Produk extends Model
 
     function stok_in(){
         return $this->hasMany(StokIn::class);
+    }
+
+    public function pinjam() {
+        return $this->hasMany(Pinjam::class);
     }
 }

@@ -10,8 +10,10 @@ class StokIn extends Model
     use HasFactory;
 
     protected $fillable = [
-        'produk_id', 'satuan_id', 'tempat_id', 'harga_beli', 'tgl_beli', 'jml_produk'
+        'produk_id', 'satuan_id', 'tempat_id', 'harga_beli', 'tgl_beli', 'qty'
     ];
+
+    protected $dates = ['tgl_beli'];
 
     function produk() {
         return $this->belongsTo(Produk::class);

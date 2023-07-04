@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Produk | Admin')
-@section('page-title', 'Produk')
+@section('tab-title', 'Stok Keluar | Admin')
+@section('page-title', 'Stok Keluar')
 @section('contents')
     <div class="row">
         <div class="col">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Produk</h4>
+                    <h4 class="card-title">Kurangi Stok</h4>
                 </div>
                 <div class="card-body">
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('produk.create') }}" class="btn btn-success">Tambah Produk</a>
+                                <a href="{{ route('stokOut.create') }}" class="btn btn-success">Kurangi Stok</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"
@@ -32,37 +32,42 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px">No</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col">Kode Produk</th>
                                 <th scope="col">Nama Produk</th>
-                                <th scope="col">Kategori</th>
+                                <th scope="col">Jumlah Produk Keluar</th>
+                                <th scope="col">Pemohon</th>
+                                <th scope="col">Keterangan</th>
                                 <th style="width: 150px" scope="col">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($produks as $produk)
+                            @forelse ($stokOuts as $stokOut)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center">
-                                        <img src="{{ asset('storage/produk/' . $produk->foto_produk) }}"
-                                            class="card-img img-thumbnails" style="max-height: 150px; max-width: 150px; overflow-x: hidden; overflow-y: hidden">
-                                    </td>
-                                    <td>{{ $produk->kode_produk }}</td>
-                                    <td>{{ $produk->nama_produk }}</td>
-                                    <td>{{ $produk->kategori->nama_kategori }}</td>
+                                    <td>{{ $stokOut->produk->nama_produk }}</td>
+                                    <td>{{ $stokOut->qty }}</td>
+                                    <td>{{ $stokOut->created_at->isoFormat('dddd, DD MMMM Y') }}</td>
+                                    <td>{{ $stokOut->pemohon }}</td>
+                                    <td>{{ $stokOut->keterangan }}</td>
                                     <td>
-                                        <form action="{{ route('produk.destroy', $produk->id) }}" method="POST">
-                                            {{-- <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-secondary">Detail</a> --}}
-                                            <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete">Hapus</button>
-                                        </form>
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <a href="{{ route('stokOut.edit', $stokOut->id) }}"
+                                                    class="btn btn-sm btn-secondary">Edit</a>
+                                            </div>
+                                            <div class="col-auto">
+                                                <form action="{{ route('stokOut.destroy', $stokOut->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger btn-flat show-alert-delete-box btn-sm btn-delete">Hapus</button>
+                                                    <div class="row">
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Produk belum Tersedia.
+                                    Stok Keluar belum Tersedia.
                                 </div>
                             @endforelse
                         </tbody>
@@ -72,7 +77,7 @@
             </div>
         </div>
         <div class="d-flex mt-2">
-            {!! $produks->links() !!}
+            {!! $stokOuts->links() !!}
         </div>
     </div>
     <script>
@@ -84,4 +89,5 @@
             toastr.error('{{ session('error') }}', 'GAGAL!');
         @endif
     </script>
+
 @endsection

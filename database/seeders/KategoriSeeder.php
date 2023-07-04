@@ -18,7 +18,22 @@ class KategoriSeeder extends Seeder
         DB::table('kategoris')->insert(
             [
                 'nama_kategori' => 'Lain - Lain',
-                'kode_kategori' => 'ST/KAT-OTH'
+                'kode_kategori' => 'ST/KAT-OTH',
+                'created_at' => now(),
+            ]
+        );
+        DB::table('kategoris')->insert(
+            [
+                'nama_kategori' => 'Alat Tulis Kantor',
+                'kode_kategori' => 'ST/KAT-ATK',
+                'created_at' => now(),
+            ]
+        );
+        DB::table('kategoris')->insert(
+            [
+                'nama_kategori' => 'Alat Elektronik',
+                'kode_kategori' => 'ST/KAT-ELC',
+                'created_at' => now(),
             ]
         );
     }

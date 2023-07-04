@@ -17,7 +17,7 @@
                             <div>
                                 <div class="form-group">
                                     <label for="kode_kategori">Kode Kategori</label>
-                                    <input type="text" id="kode_kategori" name="kode_kategori"
+                                    <input type="text" id="kode_kategori" name="kode_kategori" style="text-transform: uppercase"
                                         class="form-control @error('kode_kategori') is-invalid @enderror" autofocus>
                                 </div>
                                 <div class="form-group">
