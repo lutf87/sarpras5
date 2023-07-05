@@ -14,9 +14,9 @@ class DashboardController extends Controller
         $produk = DB::table('produks')->count();
         $stok = Produk::sum('qty');
         $pro_pjm = Produk::whereIn('pinjam', ['ya'])->count();
-        $pro_tk = Produk::whereIn('pinjam', ['tidak'])->count();
-        $pro_tdk = Produk::whereIn('pinjam', ['ya'])->sum('qty');
-        $pro_tk_st = Produk::whereIn('pinjam', ['tidak'])->sum('qty');
-        return view('admin.dashboard', compact('produk', 'stok', 'pro_pjm', 'pro_tdk', 'pro_tk', 'pro_tk_st'));
+        $pro_hbs = Produk::whereIn('pinjam', ['tidak'])->count();
+        $pro_pjm_total = Produk::whereIn('pinjam', ['ya'])->sum('qty');
+        $pro_hbs_total = Produk::whereIn('pinjam', ['tidak'])->sum('qty');
+        return view('admin.dashboard', compact('produk', 'stok', 'pro_pjm', 'pro_hbs', 'pro', 'pro_tk_st'));
     }
 }
