@@ -36,7 +36,9 @@
                                     <th style="width: 50px">No</th>
                                     <th scope="col">Nama Produk</th>
                                     <th scope="col">Kategori</th>
-                                    <th scope="col">Total Stok</th>
+                                    <th scope="col">Total Barang Masuk</th>
+                                    <th scope="col">Total Barang Keluar</th>
+                                    <th scope="col">Total Barang</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +47,8 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $produk->nama_produk }}</td>
                                         <td>{{ $produk->kategori->nama_kategori }}</td>
+                                        <td></td>
+                                        <td></td>
                                         <td>{{ $produk->qty }}</td>
                                     </tr>
                                 @empty

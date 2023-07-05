@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Tambah Produk | Admin')
-@section('page-title', 'Tambah Produk')
+@section('tab-title', 'Tambah Barang | Admin')
+@section('page-title', 'Tambah Barang')
 @section('contents')
     <div class="row">
         <div class="col-md-5">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h3 class="card-title">Tambah Data Produk</h3>
+                    <h3 class="card-title">Tambah Data Barang</h3>
                 </div>
                 <form action="{{ route('produk.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -17,13 +17,15 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group mb-3">
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="nama_produk" class="form-label">Nama Produk</label>
+                                    <input type="text" id="nama_produk" name="nama_produk"
+                                        style="text-transform: capitalize"
+                                        class="form-control @error('nama_produk') is-invalid @enderror" autofocus />
+                                    @if ($errors->has('nama_produk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('nama_produk') }}</span>
                                         </div>
                                     @endif
                                 </div>
@@ -31,33 +33,22 @@
                                     <label for="foto_produk" class="form-label">Foto Produk</label>
                                     <input type="file" id="foto_produk" name="foto_produk"
                                         class="form-control @error('foto_produk') is-invalid @enderror" />
-                                    @error('foto_produk')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    @if ($errors->has('foto_produk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('foto_produk') }}</span>
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="nama_produk" class="form-label">Nama Produk</label>
-                                    <input type="text" id="nama_produk" name="nama_produk"
-                                        class="form-control @error('nama_produk') is-invalid @enderror" autofocus />
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="nama_produk" class="form-label">Gunakan Produk Untuk Dipinjam</label>
                                     <div class="row">
                                         <div class="col">
-                                            <input type="radio" id="html" name="fav_language" value="ya">
+                                            <input type="radio" id="html" name="pinjam" value="ya" checked>
                                             <label for="html" class="me-3">Ya</label>
-                                            <input type="radio" id="css" name="fav_language" value="tidak">
+                                            <input type="radio" id="css" name="pinjam" value="tidak">
                                             <label for="css">Tidak</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="kode_produk" class="form-label">Kode Produk</label>
-                                    <input type="text" id="kode_produk" name="kode_produk"
-                                        style="text-transform: uppercase"
-                                        class="form-control @error('kode_produk') is-invalid @enderror" />
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="kategori_produk" class="form-label">Kategori Produk</label>
@@ -68,6 +59,22 @@
                                             <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('kategori_produk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('kategori_produk') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="kode_produk" class="form-label">Kode Produk</label>
+                                    <input type="text" id="kode_produk" name="kode_produk"
+                                        style="text-transform: uppercase" value="sp/pro-"
+                                        class="form-control @error('kode_produk') is-invalid @enderror" />
+                                    @if ($errors->has('kode_produk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('kode_produk') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -80,15 +87,6 @@
                         <button name="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp;
                             Tambahkan</button>
                     </div>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                 </form>
             </div>
         </div>

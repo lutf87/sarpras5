@@ -62,7 +62,7 @@ class ProdukController extends Controller
         if ($pjm == 'ya') {
             $ok = "ya";
             $produk['pinjam'] = $ok;
-        } elseif ($choice == 'tidak') {
+        } elseif ($pjm == 'tidak') {
             $ko = "tidak";
             $produk['pinjam'] = $ko;
         }
@@ -92,7 +92,7 @@ class ProdukController extends Controller
         return view('admin.produk.show', compact('produk'));
     }
 
-    public function edit(Produk $produk, Kategori $kategori, $id)
+    public function edit($id)
     {
         $produk = Produk::findOrFail($id);
 
@@ -102,7 +102,7 @@ class ProdukController extends Controller
         // dd($produk);
     }
 
-    public function update(Request $request, Produk $produk, $id)
+    public function update(Request $request, $id)
     {
         $produk = Produk::findOrFail($id);
         // $produk->delete();

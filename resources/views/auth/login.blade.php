@@ -8,7 +8,7 @@
             <center>
             <img src="{{ asset('img/stimata.png') }}" alt="madarasah" height="200" width="200" style="margin-bottom: 20px">
             </center>
-            <h1 class="h3 mb-2 fw-bold text-center">Aplikasi Inventarisasi Sarana Prasarana</h1>
+            <h1 class="h3 mb-2 fw-bold text-center">Inventarisasi Sarana Prasarana</h1>
             <h3 class="h3 mb-3 fw-normal text-center">STMIK PPKIA PRADNYA PARAMITA</h3>
             <h2 class="h3 mb-3 text-center">Malang</h2>
 

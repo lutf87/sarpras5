@@ -37,7 +37,11 @@ class TempatController extends Controller
     public function store(Request $request)
     {
         $request->validate(
-            ['nama_tempat' => 'required']
+            [
+                'nama_tempat' => 'required'
+            ],[
+                'nama_tempat.required' => 'Nama Tempat Harap Diisi'
+            ]
         );
 
         $tmp['nama_tempat'] = Str::title($request->input('nama_tempat'));

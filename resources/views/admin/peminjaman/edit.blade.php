@@ -11,7 +11,7 @@
                 </div>
                 <form action="{{ route('peminjaman.update', $pinjam->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('patch')
+                    @method('PATCH')
 
                     <div class="card-body">
                         <div class="row">
@@ -47,7 +47,7 @@
                                 <div class="form-group mb-3">
                                     <label for="kode_pinjam" class="form-label">Kode Pinjam</label>
                                     <input type="text" id="kode_pinjam" name="kode_pinjam" class="form-control"
-                                        @error('kode_pinjam') is-invalid @enderror 
+                                        @error('kode_pinjam') is-invalid @enderror
                                         style="text-transform: uppercase"
                                         value="{{ old('kode_pinjam', $pinjam->kode_pinjam) }}" />
                                 </div>

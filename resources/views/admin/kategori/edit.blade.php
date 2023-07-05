@@ -17,16 +17,26 @@
                         <div class="row">
                             <div>
                                 <div class="form-group">
-                                    <label for="kode_kategori">Kode Kategori</label>
-                                    <input type="text" id="kode_kategori" name="kode_kategori"
-                                        class="form-control @error('kode_kategori') is-invalid @enderror"
-                                        value="{{ old('kode_kategori', $kategori->kode_kategori) }}" autofocus>
-                                </div>
-                                <div class="form-group">
                                     <label for="nama_kategori">Nama Kategori</label>
                                     <input type="text" id="nama_kategori" name="nama_kategori"
                                         class="form-control @error('nama_kategori') is-invalid @enderror"
-                                        value="{{ old('nama_kategori', $kategori->nama_kategori) }}">
+                                        value="{{ old('nama_kategori', $kategori->nama_kategori) }}" autofocus />
+                                    @if ($errors->has('nama_kategori'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('nama_kategori') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="kode_kategori">Kode Kategori</label>
+                                    <input type="text" id="kode_kategori" name="kode_kategori"
+                                        class="form-control @error('kode_kategori') is-invalid @enderror"
+                                        value="{{ old('kode_kategori', $kategori->kode_kategori) }}" />
+                                    @if ($errors->has('kode_kategori'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('kode_kategori') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -36,7 +46,8 @@
                     <div class="card-footer">
                         <a href="{{ route('kategori.index') }}" name="kembali" class="btn btn-danger" id="back"><i
                                 class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a> &nbsp;
-                        <button name="submit" class="btn btn-primary btn-update"><i class="nav-icon fas fa-save"></i> &nbsp;
+                        <button name="submit" class="btn btn-primary btn-update"><i class="nav-icon fas fa-save"></i>
+                            &nbsp;
                             Simpan</button>
                     </div>
                     @if ($errors->any())

@@ -11,7 +11,7 @@
                 </div>
                 <form action="{{ route('stokIn.update', $stokIn->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('patch')
+                    @method('PATCH')
 
                     <div class="card-body">
                         <div class="row">
@@ -28,36 +28,65 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label for="harga_beli" class="form-label">Harga Beli Produk</label>
-                                    <input type="text" id="harga_beli" name="harga_beli"
-                                        class="uang form-control @error('harga_beli') is-invalid @enderror"
-                                        value="{{ old('harga_beli', $stokIn->harga_beli) }}"/>
+                                <div class="form-goup mb-3">
+                                    <label for="merk" class="form-label">Merk</label>
+                                    <input type="text" id="merk" name="merk" style="text-transform: capitalize"
+                                        class="form-control @error('merk') is-invalid @enderror"
+                                        value="{{ old('merk', $stokIn->merk) }}" />
+                                    @if ($errors->has('merk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('merk') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="tgl_beli" class="form-label">Tanggal Beli</label>
+                                    <label for="tgl_beli" class="form-label">Tanggal Beli Barang</label>
                                     <input type="date" id="tgl_beli" name="tgl_beli"
                                         class="form-control @error('tgl_beli') is-invalid @enderror"
-                                        value="{{ old('tgl_beli', $stokIn->tgl_beli) }}">
+                                        value="{{ old('tgl_beli', $stokIn->tgl_beli) }}" />
+                                    @if ($errors->has('tgl_beli'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('tgl_beli') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="qty" class="form-label">Jumlah Produk Masuk</label>
-                                    <input type="number" id="qty" name="qty"
-                                        class="form-control @error('qty') is-invalid @enderror"
-                                        value="{{ old('qty', $stokIn->qty) }}">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="penempatan" class="form-label">Penempatan</label>
-                                    <select name="penempatan" id="penempatan"
-                                        class="form-select @error('penempatan') is-invalid @enderror">
-                                        <option value="">Penempatan Produk</option>
+                                    <label for="nama_tempat" class="form-label">Penepatan Barang</label>
+                                    <select name="nama_tempat" id="nama_tempat" class="form-select">
+                                        <option value="">Pilih Penematan</option>
                                         @foreach ($tempats as $tempat)
                                             <option value="{{ $tempat->id }}"
-                                                @if ($stokIn->tempat_id == $tempat->id) selected @endif>
-                                                {{ $tempat->nama_tempat }}
+                                                @if ($stokIn->tempat_id == $tempat->id) selected @endif>{{ $tempat->nama_tempat }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('nama_tempat'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('nama_tempat') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="harga_beli" class="form-label">Harga Beli Barang</label>
+                                    <input type="text" id="harga_beli" name="harga_beli"
+                                        class="uang form-control @error('harga_beli') is-invalid @enderror"
+                                        value="{{ old('harga_beli', $stokIn->harga_beli) }}" />
+                                    @if ($errors->has('harga_beli'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('harga_beli') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="qty" class="form-label">Jumlah Barang</label>
+                                    <input type="number" id="qty" name="qty"
+                                        class="form-control @error('qty') is-invalid @enderror"
+                                        value="{{ old('qty', $stokIn->qty) }}" />
+                                    @if ($errors->has('qty'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('qty') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

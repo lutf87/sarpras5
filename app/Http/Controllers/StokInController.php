@@ -71,6 +71,7 @@ class StokInController extends Controller
 
         $stokIn['produk_id'] = $request->input('produk_id');
         $stokIn['tempat_id'] = $request->input('nama_tempat');
+        // $stokIn['merk'] = Str
         $stokIn['harga_beli'] = $hrg_int;
         $stokIn['tgl_beli'] = $request->input('tgl_beli');
         $stokIn['qty'] = $request->input('qty');

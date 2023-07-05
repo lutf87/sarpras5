@@ -35,6 +35,7 @@
                                 <th style="width: 50px">No</th>
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Penempatan</th>
+                                <th scope="col">Merk</th>
                                 <th scope="col">Harga Beli</th>
                                 <th scope="col">Tanggal Beli</th>
                                 <th scope="col">Jumlah Produk Masuk</th>
@@ -47,6 +48,7 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $stokIn->produk->nama_produk }}</td>
                                     <td>{{ $stokIn->tempat->nama_tempat }}</td>
+                                    <td>{{ $stokIn->merk }}</td>
                                     <td>{{ $stokIn->harga_beli }}</td>
                                     <td>{{ $stokIn->tgl_beli->isoFormat('dddd, DD MMMM Y') }}</td>
                                     <td>{{ $stokIn->qty }}</td>

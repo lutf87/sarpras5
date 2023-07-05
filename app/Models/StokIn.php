@@ -10,7 +10,7 @@ class StokIn extends Model
     use HasFactory;
 
     protected $fillable = [
-        'produk_id', 'satuan_id', 'tempat_id', 'harga_beli', 'tgl_beli', 'qty'
+        'produk_id', 'tempat_id', 'merk', 'harga_beli', 'tgl_beli', 'qty'
     ];
 
     protected $dates = ['tgl_beli'];

@@ -36,34 +36,20 @@ Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    // kategori
-    Route::prefix('kategori')->group(function () {
-        Route::get('/', [KategoriController::class, 'index'])->name('kategori.index');
-        Route::get('tambah', [KategoriController::class, 'create'])->name('kategori.create');
-        Route::post('/', [KategoriController::class, 'store'])->name('kategori.store');
-        Route::delete('/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
-        Route::get('edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
-        Route::patch('/{id}', [KategoriController::class, 'update'])->name('kategori.update');
-    });
 
+    // kategori
+    Route::resource('kategori', KategoriController::class);
+    
     // produk
-    Route::prefix('produk')->group(function () {
-        Route::get('/', [ProdukController::class, 'index'])->name('produk.index');
-        Route::get('tambah', [ProdukController::class, 'create'])->name('produk.create');
-        Route::post('/', [ProdukController::class, 'store'])->name('produk.store');
-        Route::get('detail/{id}', [ProdukController::class, 'show'])->name('produk.show');
-        Route::get('edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
-        Route::post('update/{id}', [ProdukController::class, 'update'])->name('produk.update');
-        Route::delete('/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
-    });
+    Route::resource('produk', ProdukController::class);
 
     // stok masuk
+    Route::resource('stokIn', StokInController::class);
     Route::prefix('stokIn')->group(function () {
         Route::get('/export-excel', [StokInController::class, 'export'])->name('stokIn.export');
         Route::get('/export-total', [StokInController::class, 'total'])->name('stokAll.export');
     });
 
-    Route::resource('stokIn', StokInController::class);
     Route::resource('stokOut', StokOutController::class);
     Route::resource('stok', StokController::class);
     Route::resource('tempat', TempatController::class);

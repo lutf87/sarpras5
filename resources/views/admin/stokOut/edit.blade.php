@@ -11,7 +11,7 @@
                 </div>
                 <form action="{{ route('stokOut.update', $stokOut->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('patch')
+                    @method('PATCH')
 
                     <div class="card-body">
                         <div class="row">

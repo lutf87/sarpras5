@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
             $table->unsignedBigInteger('tempat_id');
             $table->foreign('tempat_id')->references('id')->on('tempats')->onDelete('cascade');
+            $table->string('merk', 100)->nullable();
             $table->integer('harga_beli')->nullable();
             $table->date('tgl_beli', 20)->nullable();
             $table->integer('qty')->nullable();

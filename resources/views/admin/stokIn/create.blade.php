@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('tab-title', 'Tambah Stok | Admin')
-@section('page-title', 'Tambah Stok')
+@section('tab-title', 'Tambah Stok Barang | Admin')
+@section('page-title', 'Tambah Stok Barang')
 @section('contents')
     <div class="row">
         <div class="col-md-5">
             <div class="card border-0 shadow rounded">
                 <div class="card-header">
-                    <h3 class="card-title">Tambah Data Produk</h3>
+                    <h3 class="card-title">Tambah Data Barang</h3>
                 </div>
                 <form action="{{ route('stokIn.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -16,40 +16,54 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <div class="form-group mb-3">
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                                </div>
                                 <div class="form-goup mb-3">
-                                    <label for="produk_id" class="form-label">Nama Produk</label>
+                                    <label for="produk_id" class="form-label">Nama Barang</label>
                                     <select class="form-select @error('produk_id') is-invalid @enderror" id="produk_id"
                                         name="produk_id" autofocus>
-                                        <option value="" selected>Pilih Produk</option>
+                                        <option value="" selected>Pilih Barang</option>
                                         @foreach ($produks as $produk)
                                             <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('produk_id'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('produk_id') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-goup mb-3">
+                                    <label for="merk" class="form-label">Merk</label>
+                                    <input type="text" id="merk" name="merk" style="text-transform: capitalize"
+                                        class="form-control @error('merk') is-invalid @enderror" />
+                                    @if ($errors->has('merk'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('merk') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="tgl_beli" class="form-label">Tanggal Beli Produk</label>
+                                    <label for="tgl_beli" class="form-label">Tanggal Beli Barang</label>
                                     <input type="date" id="tgl_beli" name="tgl_beli"
                                         class="form-control @error('tgl_beli') is-invalid @enderror" />
+                                    @if ($errors->has('tgl_beli'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('tgl_beli') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="nama_tempat" class="form-label">Penepatan Produk</label>
+                                    <label for="nama_tempat" class="form-label">Penepatan Barang</label>
                                     <select name="nama_tempat" id="nama_tempat" class="form-select">
                                         <option value="">Pilih Penematan</option>
                                         @foreach ($tempats as $tempat)
                                             <option value="{{ $tempat->id }}">{{ $tempat->nama_tempat }}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('nama_tempat'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('nama_tempat') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col"></div>
@@ -62,14 +76,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="harga_beli" class="form-label">Harga Beli Produk</label>
+                                    <label for="harga_beli" class="form-label">Harga Beli Barang</label>
                                     <input type="text" id="harga_beli" name="harga_beli"
                                         class="uang form-control @error('harga_beli') is-invalid @enderror" />
+                                    @if ($errors->has('harga_beli'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('harga_beli') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="qty" class="form-label">Jumlah Produk</label>
+                                    <label for="qty" class="form-label">Jumlah Barang</label>
                                     <input type="number" id="qty" name="qty"
                                         class="form-control @error('qty') is-invalid @enderror" />
+                                    @if ($errors->has('qty'))
+                                        <div class="alert alert-danger mt-2">
+                                            <span class="text-danger mt-1">{{ $errors->first('qty') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -105,7 +129,12 @@
                         @method('POST')
                         <div class="form-group">
                             <label for="nama_tempat" class="form-label">Nama Tempat</label>
-                            <input type="text" name="nama_tempat" id="nama_tempat" class="form-control" required>
+                            <input type="text" name="nama_tempat" id="nama_tempat" class="form-control" autofocus required>
+                            @if ($errors->has('nama_tempat'))
+                                <div class="alert alert-danger mt-2">
+                                    <span class="text-danger mt-1">{{ $errors->first('nama_tempat') }}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">

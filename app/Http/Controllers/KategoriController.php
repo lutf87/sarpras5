@@ -42,7 +42,7 @@ class KategoriController extends Controller
         $request->validate(
             [
                 'nama_kategori' => 'required',
-                'kode_kategori' => 'unique:kategoris,kode_kategori|regex:/^\S*$/u',
+                'kode_kategori' => 'required|unique:kategoris,kode_kategori|regex:/^\S*$/u',
             ],
             [
                 'nama_kategori' => 'Nama kategori harus diisi',

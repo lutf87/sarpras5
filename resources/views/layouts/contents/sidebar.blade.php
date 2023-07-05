@@ -41,8 +41,8 @@
                     </nav>
                 </div>
 
-
-                <div class="sb-sidenav-menu-heading">Interface</div>
+                <!-- Peminjaman -->
+                {{-- <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#peminjaman"
                     aria-expanded="false" aria-controls="peminjaman">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -55,7 +55,7 @@
                         <a class="nav-link" href="{{ route('peminjaman.index') }}">Peminjaman</a>
                         <a class="nav-link" href="{{ route('pengembalian.index') }}">Pengembalian</a>
                     </nav>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="sb-sidenav-footer">
