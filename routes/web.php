@@ -39,19 +39,35 @@ Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
 
     // kategori
     Route::resource('kategori', KategoriController::class);
-    
-    // produk
-    Route::resource('produk', ProdukController::class);
 
     // stok masuk
-    Route::resource('stokIn', StokInController::class);
     Route::prefix('stokIn')->group(function () {
-        Route::get('/export-excel', [StokInController::class, 'export'])->name('stokIn.export');
-        Route::get('/export-total', [StokInController::class, 'total'])->name('stokAll.export');
+        Route::get('/export-excel', [StokInController::class, 'exportExcel'])->name('stokIn.export');
+        Route::get('/export-pdf', [StokInController::class, 'exportPdf'])->name('stokIn.exportPdf');
     });
+    Route::resource('stokIn', StokInController::class);
 
+    // stok keluar
+    Route::prefix('stokOut')->group(function () {
+        Route::get('/export-excel', [StokOutController::class, 'exportExcel'])->name('stokOut.export');
+        Route::get('/export-pdf', [StokOutController::class, 'exportPdf'])->name('stokOut.exportPdf');
+    });
     Route::resource('stokOut', StokOutController::class);
+
+    // stok total
+    Route::prefix('stok')->group(function () {
+        Route::get('/export-excel', [StokController::class, 'exportExcel'])->name('stok.export');
+        Route::get('/export-pdf', [StokController::class, 'exportPdf'])->name('stok.exportPdf');
+    });
     Route::resource('stok', StokController::class);
+
+    // produk
+    Route::prefix('produk')->group(function () {
+        Route::get('/export-excel', [ProdukController::class, 'exportExcel'])->name('produk.export');
+        Route::get('/export-pdf', [ProdukController::class, 'exportPdf'])->name('produk.exportPdf');
+    });
+    Route::resource('produk', ProdukController::class);
+
     Route::resource('tempat', TempatController::class);
     Route::resource('peminjaman', PinjamController::class);
     // Route::resource('pengembalian', KembaliController::class);

@@ -43,7 +43,7 @@
                                     <label for="tgl_beli" class="form-label">Tanggal Beli Barang</label>
                                     <input type="date" id="tgl_beli" name="tgl_beli"
                                         class="form-control @error('tgl_beli') is-invalid @enderror"
-                                        value="{{ old('tgl_beli', $stokIn->tgl_beli) }}" />
+                                        value="{{ old('tgl_beli', optional($stokIn->tgl_beli)->isoFormat('DD/MM/YYYY')) }}" />
                                     @if ($errors->has('tgl_beli'))
                                         <div class="alert alert-danger mt-2">
                                             <span class="text-danger mt-1">{{ $errors->first('tgl_beli') }}</span>

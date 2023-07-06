@@ -14,6 +14,8 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{ route('produk.create') }}" class="btn btn-success">Tambah Produk</a>
+                                <a href="{{ route('produk.export') }}" class="btn btn-success">Export Excel</a>
+                                <a href="#" class="btn btn-success">Export Pdf</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"

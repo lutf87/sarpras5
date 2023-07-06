@@ -13,7 +13,8 @@
                     <form action="#">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ route('stokAll.export') }}" class="btn btn-warning">Export Total</a>
+                                <a href="{{ route('stok.export') }}" class="btn btn-warning">Export Excel</a>
+                                <a href="{{ route('stok.exportPdf') }}" class="btn btn-warning" class="btn btn-warning">Export Pdf</a>
                                 {{-- <a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a> --}}
                             </div>
                             <div class="col-auto">
@@ -47,8 +48,8 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $produk->nama_produk }}</td>
                                         <td>{{ $produk->kategori->nama_kategori }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $produk->stokin->sum('qty') }}</td>
+                                        <td>{{ $produk->stokout->sum('qty') }}</td>
                                         <td>{{ $produk->qty }}</td>
                                     </tr>
                                 @empty

@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DetailProdukExport;
+use PDF;
 
 class ProdukController extends Controller
 {
@@ -177,4 +180,19 @@ class ProdukController extends Controller
         toast('Produk Berhasil Dihapus', 'success')->autoClose(1500);
         return redirect()->route('produk.index');
     }
+
+    public function exportExcel()
+    {
+        return Excel::download(new DetailProdukExport, 'detail_produk.xlsx');
+        // return (new StockExport ($this->selected))->download('barang_masuk.xlsx');
+    }
+
+    // public function exportPdf()
+    // {
+    //     $datas = StokIn::all();
+    //     view()->share('datas', $datas);
+    //     $pdf = PDF::loadview('admin.stokIn.export-pdf');
+    //     return $pdf->download('barang_masuk.pdf');
+    //     // return view('admin.stokIn.export-pdf', compact('datas'))->with('no', 1);
+    // }
 }

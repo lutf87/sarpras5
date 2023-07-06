@@ -8,8 +8,10 @@ use App\Models\StokIn;
 use App\Models\Tempat;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StockExport;
-use App\Exports\StockAllExport;
+use PDF;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class StokInController extends Controller
 {
@@ -71,7 +73,7 @@ class StokInController extends Controller
 
         $stokIn['produk_id'] = $request->input('produk_id');
         $stokIn['tempat_id'] = $request->input('nama_tempat');
-        // $stokIn['merk'] = Str
+        $stokIn['merk'] = Str::title($request->input('merk'));
         $stokIn['harga_beli'] = $hrg_int;
         $stokIn['tgl_beli'] = $request->input('tgl_beli');
         $stokIn['qty'] = $request->input('qty');
@@ -138,12 +140,12 @@ class StokInController extends Controller
         $request->validate(
             [
                 'produk_id' => 'required',
-                'penempatan' => 'required',
+                'nama_tempat' => 'required',
                 'qty' => 'required'
             ],
             [
                 'produk_id.required' => 'Nama Produk Harus Dipilih',
-                'penempatan.required' => 'Penempatan Produk Harus Dipiplih',
+                'nama_tempat.required' => 'Penempatan Produk Harus Dipiplih',
                 'qty.required' => 'Jumlah Produk Harus Diisi'
             ]
         );
@@ -163,8 +165,9 @@ class StokInController extends Controller
         $stokIn->update(
             [
                 'produk_id' => $request->input('produk_id'),
-                'tempat_id' => $request->input('penempatan'),
+                'tempat_id' => $request->input('nama_tempat'),
                 'harga_beli' => $hrg_int,
+                'merk' => Str::title($request->input('merk')),
                 'tgl_beli' => $request->input('tgl_beli'),
                 'qty' => $request->input('qty'),
             ]
@@ -213,13 +216,18 @@ class StokInController extends Controller
 
     }
 
-    public function export()
+    public function exportExcel()
     {
         return Excel::download(new StockExport, 'barang_masuk.xlsx');
+        // return (new StockExport ($this->selected))->download('barang_masuk.xlsx');
     }
 
-    public function total()
+    public function exportPdf()
     {
-        return Excel::download(new StockAllExport, 'total_barang.xlsx');
+        $datas = StokIn::all();
+        view()->share('datas', $datas);
+        $pdf = PDF::loadview('admin.stokIn.export-pdf');
+        return $pdf->download('barang_masuk.pdf');
+        // return view('admin.stokIn.export-pdf', compact('datas'))->with('no', 1);
     }
 }

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use App\Models\StokIn;
+use App\Models\StokOut;
+use App\Exports\ProdukExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class StokController extends Controller
 {
@@ -14,8 +19,11 @@ class StokController extends Controller
      */
     public function index()
     {
-        $produks = Produk::orderBy('kategori_id', 'asc')->paginate(5);
+        $produks = Produk::with('stokin', 'stokout')->orderBy('kategori_id', 'asc')->paginate(5);
+        // $out = StokOut::sum('qty');
+
         return view('admin.stok.index', compact('produks'))->with('no', 1);
+        // dd($qtyIn, $qtyOut);
     }
 
     /**
@@ -82,5 +90,20 @@ class StokController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new ProdukExport, 'total_barang.xlsx');
+        // return (new StockExport ($this->selected))->download('barang_masuk.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $datas = Produk::all();
+        view()->share('datas', $datas);
+        $pdf = PDF::loadview('admin.stok.export-pdf');
+        return $pdf->download('total_barang.pdf');
+        // return view('admin.stok.export-pdf', compact('datas'))->with('no', 1);
     }
 }

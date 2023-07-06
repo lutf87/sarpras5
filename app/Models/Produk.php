@@ -18,11 +18,17 @@ class Produk extends Model
         return $this->belongsTo(Kategori::class);
     }
 
-    function stok_in(){
+    function stokin(){
         return $this->hasMany(StokIn::class);
     }
 
+    function stokout(){
+        return $this->hasMany(StokOut::class);
+    }
     public function pinjam() {
         return $this->hasMany(Pinjam::class);
+    }
+    public function tempat() {
+        return $this->belongsTo(Tempat::class);
     }
 }

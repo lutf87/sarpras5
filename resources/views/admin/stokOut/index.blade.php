@@ -14,6 +14,8 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{ route('stokOut.create') }}" class="btn btn-success">Kurangi Stok</a>
+                                <a href="{{ route('stokOut.export') }}" class="btn btn-warning">Ekspor Excel</a>
+                                <a href="{{ route('stokOut.exportPdf') }}" class="btn btn-warning">Ekspor Pdf</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"
@@ -34,6 +36,7 @@
                                 <th style="width: 50px">No</th>
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Jumlah Produk Keluar</th>
+                                <th scope="col">Tanggal Keluar</th>
                                 <th scope="col">Pemohon</th>
                                 <th scope="col">Keterangan</th>
                                 <th style="width: 150px" scope="col">Opsi</th>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\StokOut;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StockOutExport;
+use PDF;
 
 class StokOutController extends Controller
 {
@@ -27,7 +30,9 @@ class StokOutController extends Controller
      */
     public function create()
     {
+
         $produks = Produk::orderBy('kategori_id', 'asc')
+            ->where('qty', '>', 0)
             ->whereIn('pinjam', ['tidak'])
             ->get();
         return view('admin.stokOut.create', compact('produks'));
@@ -65,7 +70,7 @@ class StokOutController extends Controller
             toast('Maaf Stok Produk '.$produk->nama_produk.' Telah Habis','error')->autoClose(3000);
             return redirect()->route('stokOut.create');
         } elseif($request->qty > $produk->qty) {
-            return redirect()->route('stokOut.create')->with('error', 'Maaf Jumlah Produk '.$produk->nama_produk.' Saat Ini Tersisa '.$produk->qty);
+            return back()->with('error', 'Maaf Jumlah Produk '.$produk->nama_produk.' Saat Ini Tersisa '.$produk->qty);
         } else{
             $stokOut['produk_id'] = $request->input('produk_id');
             $stokOut['qty'] = $request->input('qty');
@@ -205,5 +210,20 @@ class StokOutController extends Controller
 
         toast('Stok Berhasil Dihapus', 'success')->autoClose(1500);
         return redirect()->route('stokOut.index');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new StockOutExport, 'barang_keluar.xlsx');
+        // return (new StockExport ($this->selected))->download('barang_masuk.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $datas = StokOut::all();
+        view()->share('datas', $datas);
+        $pdf = PDF::loadview('admin.stokIn.export-pdf');
+        return $pdf->download('barang_keluar.pdf');
+        // return view('admin.stokIn.export-pdf', compact('datas'))->with('no', 1);
     }
 }

@@ -15,6 +15,7 @@
                             <div class="col">
                                 <a href="{{ route('stokIn.create') }}" class="btn btn-success">Tambah Stok</a>
                                 <a href="{{ route('stokIn.export') }}" class="btn btn-warning ms-2">Export Excel</a>
+                                <a href="{{ route('stokIn.exportPdf') }}" class="btn btn-warning ms-2">Export Pdf</a>
                             </div>
                             <div class="col-auto">
                                 <input type="text" name="keyword" id="keyword" class="form-control"
@@ -49,8 +50,8 @@
                                     <td>{{ $stokIn->produk->nama_produk }}</td>
                                     <td>{{ $stokIn->tempat->nama_tempat }}</td>
                                     <td>{{ $stokIn->merk }}</td>
-                                    <td>{{ $stokIn->harga_beli }}</td>
-                                    <td>{{ $stokIn->tgl_beli->isoFormat('dddd, DD MMMM Y') }}</td>
+                                    <td>Rp. {{ number_format($stokIn->harga_beli, 0, ',', '.') }}</td>
+                                    <td>{{ optional($stokIn->tgl_beli)->isoFormat('dddd, DD MMMM Y') }}</td>
                                     <td>{{ $stokIn->qty }}</td>
                                     <td>
                                         <div class="row">
