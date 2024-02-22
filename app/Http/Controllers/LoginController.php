@@ -18,30 +18,30 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function authenticating(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+public function dologin(Request $request) {
+    // validasi
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if(Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+    if (auth()->attempt($credentials)) {
 
-            if(Auth::user()->role_id == 1) {
-                return redirect('/admin');
-            }
+        // buat ulang session login
+        $request->session()->regenerate();
 
-            // if(Auth::user()->role_id == 2) {
-            //     return redirect('/guru');
-            // }
+        if (auth()->user()->user_role === 'admin') {
+            // jika user superadmin
+            return redirect()->intended('/admin');
+        } else {
+            // jika user pegawai
+            return redirect()->intended('/guru');
         }
 
-        Session::flash('status', 'failed');
-        Session::flash('message', 'login wrong!');
-
-        return redirect('/login');
-    }
+        // jika email atau password salah
+        // kirimkan session error
+        return back()->with('error', 'email atau password salah');
+    }}
 
     /**
      * Show the form for creating a new resource.
@@ -55,7 +55,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function create()

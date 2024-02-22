@@ -1,16 +1,20 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\StokController;
-use App\Http\Controllers\StokInController;
-use App\Http\Controllers\StokOutController;
-use App\Http\Controllers\TempatController;
-use App\Http\Controllers\PinjamController;
-use App\Http\Controllers\KembaliController;
-use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PinjamController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\StokInController;
+use App\Http\Controllers\TempatController;
+use App\Http\Controllers\KembaliController;
+use App\Http\Controllers\StokOutController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuruDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +31,20 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'autenthicating'])->middleware('guest');
+//  jika user belum login
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'dologin']);
+    Route::post('/register', [RegisterController::class, 'index']);
+    Route::post('/register/create', [RegisterController::class, 'store']);
+
+});
+
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
+Route::get('/redirect', [RedirectController::class, 'cek']);
+Auth::routes();
 
-
-
-Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
-
+Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'checkrole:admin']], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // kategori
@@ -78,6 +88,8 @@ Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function () {
     });
 });
 
-Auth::routes();
+Route::group(['prefix' => '/guru', 'middleware' => ['auth', 'checkrole:user']], function(){
+    Route::get('dashboard', [GuruDashboardController::class, 'index'])->name('dashboard.index');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

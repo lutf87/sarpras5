@@ -45,7 +45,7 @@
                 </div>
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary col-md-9">
                             {{ __('Login') }}
                         </button>
 
@@ -57,7 +57,11 @@
                     </div>
                 </div>
             </form>
-
+                <div style="display: flex; width: 100%; justify-content: center; align-items: center;">
+                <div style="width: fit-content; margin-top: 10px">
+                    <h4>Belum Punya Akun? <a href="/register">Daftar</a></h4>    
+                </div>    
+                </div>
         </main>
     </div>
 </div>
